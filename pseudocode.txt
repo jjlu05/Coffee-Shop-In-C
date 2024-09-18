@@ -1,0 +1,35 @@
+coffee_shop.c
+Since the command line requires multiple commands, the main function should have parameters int argc, char* argv[]
+Check if the final command is not 1, 2, or 3 since that would be invalid input. Use if argv-1!=1 or 2 or 3;
+Find the number of files inputting by using argc-2, then create a 2d array data with 50*number of files rows, since each file has 50 rows. It should have 2 columns, since it seems like I don't need to use the string name of an item anywhere in the program.
+For loop and for each index i when i<number of files, set a FILE* f1 equal to fopen(argv[i]) and then run through every file. Run another for loop for each row in the file that adds the row data to the 2d array. Might look like 
+for(int i=0;i<numberOfFiles;i++) and then within that loop       for (int j = 0; j < 50; j++)  int rowIndex = i * 50 + j; 
+It seems that I will have to skip over the middle column of data, since the data array can only take in ints. When reading over the file to pass in data, use (fscanf(f1, "%d %*s %d", &data[rowIndex][0], &data[rowIndex][1]));
+Remember to close each file after opening.
+Finally, use argv[argc-1] to get the user calculation input 1-3, and use if statements for every value
+if input ==1, run the print_item function
+else if input==2, run the total_sales functions
+else run the top_overall function
+     
+
+
+
+
+register.c
+Implement 3 functions called print_item, total_sales, top_overall, all with parameters rows, int cols, int data[][cols]
+print_item should have an additional parameter char* nameList[]
+To implement print_item, first prompt the user for what item they want to look up. The answer will be in the form of an item code between 0-49. Store this answer in a variable named int userInput.
+Use scanf(%d,userInput) to accomplish this
+Next, to print out every instance of the user's requested item for each month of data, user a for loop (int i=0;i<rows;i++) which will run through every single possible row value(also known as item code)
+Use an if statement (data[i][0]) to check if the item code of a specific index is the same as the requested item code. If so, print out the fileName that the index is in by using index i/50 in the nameList[] array
+It might look something like this: nameList[i/50]. Then, printf(data[i][1])
+
+To implement total_sales, create an called totalArray of size 50 int totalArray[50], since you will need an array to store the amount of sales that corresponds to every item code.
+Then, using a for loop that loops through every row of the data 2D array //for(int i=0;i<rows;i++) initialize every index of the created array to its first sales data, then for every repetition of the same item code, the for loop with increment the data within the array for that specific index.
+Basically, use the item code found within the data array at a specific i index as the index of totalArray. The values this corresponds to should be incremented by the value found in the data array at that specific for loop index.
+totalSales[data[i][0]] += data[r][0];
+After finishing the creation of the totalArray, make a for loop for(int i=0; i<50; i++) that runs through every element within the totalArray and prints the index along with its corresponding value
+
+To implement top_overall, follow the same exact steps as found in total_sales except for the final step of printing. Then, initialize two variable int max and int maxIndex that store a maximum value and the corresponding index, respectively.
+Write loop for(int i=0;i<50;i++) that runs through every index of totalArray and if totalArray[i]>max, then assign max=totalArray[i] and maxIndex=i
+Finally, printf(the maxIndex)
